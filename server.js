@@ -5,7 +5,7 @@ import routes from './routers/index.js';
 import HttpError from 'http-errors';
 import http from 'http';
 import path from "path";
-import authorizationM from "./middlewares/authorizationM.js";
+// import authorizationM from "./middlewares/authorizationM.js";
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerOptions from './swaggerOptions.js';
@@ -20,7 +20,7 @@ app.use(corsM);
 
 app.use(express.static(path.resolve('public')));
 
-app.use(authorizationM);
+// app.use(authorizationM);
 
 app.use(morgan('dev'));
 
@@ -43,8 +43,8 @@ app.use((err, req, res, next) => {
 });
 
 const server = http.createServer(app);
-const port = 4000;
-
-server.listen(port, () => {
+const port = process.env.PORT || 4000;
+app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
