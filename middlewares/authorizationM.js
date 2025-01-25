@@ -11,29 +11,26 @@ const {USER_JWT_SECRET} = process.env;
 
 function authorizationM(req, res, next) {
   try {
-    const {method, path} = req;
-    const authorization = req.headers.authorization || req.headers.Authorization;
+    const { method, path } = req;
+    const { authorization = '' } = req.headers;
 
-    if (method === 'OPTIONS' || EXCLUDE.some((pattern) => (pattern instanceof RegExp ? pattern.test(`${method}:${path}`) : pattern === `${method}:${path}`))) {
+    if (method === 'OPTIONS' || EXCLUDE.includes(`${method}:${path}`)) {
       next();
       return;
     }
 
-    if (!authorization) {
-      throw HttpError(401, 'Authorization header missing');
-    }
-
     const token = authorization.replace('Bearer ', '');
-
     if (!token) {
-      throw HttpError(401, 'Token missing');
+      throw HttpError(401, 'Authorization token is missing');
     }
 
     const decoded = jwt.verify(token, USER_JWT_SECRET);
     req.userId = decoded.userId;
     next();
   } catch (e) {
-    console.log(e, 'error');
+    if (e.name === 'JsonWebTokenError') {
+      return next(HttpError(401, 'Invalid or expired token'));
+    }
     next(e);
   }
 }

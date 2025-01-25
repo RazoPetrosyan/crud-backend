@@ -10,6 +10,9 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerOptions from './swaggerOptions.js';
 
+const { PORT } = process.env;
+
+
 const app = express();
 
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
@@ -43,8 +46,8 @@ app.use((err, req, res, next) => {
 });
 
 const server = http.createServer(app);
-const port = process.env.PORT || 4000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
