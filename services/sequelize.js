@@ -2,17 +2,17 @@ import { Sequelize } from 'sequelize';
 import cls from 'cls-hooked';
 
 const {
-  MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD,
+  MYSQLHOST, MYSQLPORT, MYSQLDATABASE, MYSQLUSER, MYSQLPASSWORD,
 } = process.env;
 
 const namespace = cls.createNamespace('sequelize-transaction-namespace');
 
 Sequelize.useCLS(namespace);
 
-const sequelize = new Sequelize(MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, {
+const sequelize = new Sequelize(MYSQLDATABASE, MYSQLUSER, MYSQLPASSWORD, {
   dialect: 'mysql',
-  host: MYSQL_HOST,
-  port: MYSQL_PORT,
+  host: MYSQLHOST,
+  port: MYSQLPORT,
   logging: false,
 });
 
