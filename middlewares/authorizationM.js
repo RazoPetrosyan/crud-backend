@@ -14,6 +14,11 @@ function authorizationM(req, res, next) {
     const { method, path } = req;
     const { authorization = '' } = req.headers;
 
+    if (req.path.startsWith('/public')) {
+      return next();
+    }
+
+
     if (method === 'OPTIONS' || EXCLUDE.includes(`${method}:${path}`)) {
       next();
       return;
