@@ -14,14 +14,13 @@ const { PORT } = process.env;
 
 
 const app = express();
+app.use(express.static(path.resolve('uploads')));
 
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(corsM);
-
-app.use(express.static(path.resolve('public')));
 
 app.use(authorizationM);
 

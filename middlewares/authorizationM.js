@@ -14,7 +14,9 @@ function authorizationM(req, res, next) {
     const { method, path } = req;
     const { authorization = '' } = req.headers;
 
-    if (req.path.startsWith('/public')) {
+    console.log(req.path, req.method);
+
+    if (req.path.startsWith('/')) {
       return next();
     }
 

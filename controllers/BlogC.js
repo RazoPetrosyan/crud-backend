@@ -7,9 +7,11 @@ class BlogC {
       const {userId} = req.params;
       const {message} = req.body;
       const {file} = req;
+
+      const mediaUrl = file.path;
       const newBlog = await Blogs.create({
         message,
-        mediaPath: file.filename,
+        mediaPath: mediaUrl,
         userId,
       });
 
@@ -75,10 +77,12 @@ class BlogC {
       const {message} = req.body;
       const {file} = req;
 
+      const mediaUrl = file.path;
+
       const newBlog = await Blogs.findByPk(blogId);
       if (newBlog) {
         newBlog.message = message || newBlog.message;
-        newBlog.mediaPath = file.filename || newBlog.mediaPath;
+        newBlog.mediaPath = mediaUrl || newBlog.mediaPath;
         newBlog.userId = userId;
       }
 
